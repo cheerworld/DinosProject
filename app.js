@@ -19,8 +19,21 @@ let elasmosaurus = new DinosCreate("Elasmosaurus", 16000, 59, "carnivor", "North
 let pteranodon = new DinosCreate("Pteranodon", 44, 20, "carnivor", "North America", "Late Cretaceous", "Actually a flying reptile, the Pteranodon is not a dinosaur.");
 let pigeon = new DinosCreate("Pigeon", 0.5, 9, "herbavor", "World Wide", "Holocene", "All birds are living dinosaurs.");
 
+//Validate the form
+function validateForm() {
+  let x = document.form.name.value;
+  console.log(x);
+  if (x == "") {
+    alert("Name must be filled out");
+    return false;
+  }
+}
+
+
 const button = document.getElementById("btn");
 button.addEventListener("click", function() {
+//call validateForm function
+validateForm();
 
   // Create human object
   let human = new DinosCreate("", "", "", "", "", "", "", "");
