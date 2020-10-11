@@ -21,19 +21,19 @@ let pigeon = new DinosCreate("Pigeon", 0.5, 9, "herbavor", "World Wide", "Holoce
 
 //Validate the form
 function validateForm() {
+
   let x = document.form.name.value;
-  console.log(x);
   if (x == "") {
     alert("Name must be filled out");
     return false;
   }
 }
 
-
 const button = document.getElementById("btn");
 button.addEventListener("click", function() {
-//call validateForm function
-validateForm();
+debugger;
+//call validateForm function, if ture, execute the rest of the code
+if (validateForm()) {
 
   // Create human object
   let human = new DinosCreate("", "", "", "", "", "", "", "");
@@ -135,12 +135,12 @@ validateForm();
       }
       randomFact = document.createTextNode(randomFact);
       fact.appendChild(randomFact);
-
     }
 
   });
   // Remove form from screen
   document.querySelector("#dino-compare").style.display = "none";
+};
 
 });
 
