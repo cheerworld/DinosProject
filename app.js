@@ -23,15 +23,17 @@ let pigeon = new DinosCreate("Pigeon", 0.5, 9, "herbavor", "World Wide", "Holoce
 function validateForm() {
 
   let x = document.form.name.value;
+  let valid = true;
   if (x == "") {
     alert("Name must be filled out");
-    return false;
+    valid = false;
   }
+  return valid;
 }
 
 const button = document.getElementById("btn");
 button.addEventListener("click", function() {
-debugger;
+
 //call validateForm function, if ture, execute the rest of the code
 if (validateForm()) {
 
