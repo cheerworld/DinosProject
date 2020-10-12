@@ -1,5 +1,5 @@
 //Create Dino constructor
-function DinosCreate(species, weight, height, diet, where, when, fact) {
+function DinosCreate(species, weight, height, diet, where, when, fact, cardColor) {
   this.species = species;
   this.weight = weight;
   this.height = height;
@@ -7,17 +7,18 @@ function DinosCreate(species, weight, height, diet, where, when, fact) {
   this.where = where;
   this.when = when;
   this.fact = fact;
+  this.cardColor = cardColor;
 }
 
 //Generate Dino object
-let triceratops = new DinosCreate("Triceratops", 13000, 114, "herbavor", "North America", "Late Cretaceous", "First discovered in 1889 by Othniel Charles Marsh.");
-let tyrannosaurusRex = new DinosCreate("Tyrannosaurus Rex", 11905, 144, "carnivor", "North America", "Late Cretaceous", "The largest known skull measures in at 5 feet long.");
-let anklyosaurus = new DinosCreate("Anklyosaurus", 10500, 55, "herbavor", "North America", "Late Cretaceous", "Anklyosaurus survived for approximately 135 million years.");
-let brachiosaurus = new DinosCreate("Brachiosaurus", 70000, 372, "herbavor", "North America", "Late Jurasic", "An asteroid was named 9954 Brachiosaurus in 1991.");
-let stegosaurus = new DinosCreate("Stegosaurus", 11600, 79, "herbavor", "North America, Europe, Asia", "Late Jurasic to Early Cretaceous", "The Stegosaurus had between 17 and 22 seperate places and flat spines.");
-let elasmosaurus = new DinosCreate("Elasmosaurus", 16000, 59, "carnivor", "North America", "Late Cretaceous", "Elasmosaurus was a marine reptile first discovered in Kansas.");
-let pteranodon = new DinosCreate("Pteranodon", 44, 20, "carnivor", "North America", "Late Cretaceous", "Actually a flying reptile, the Pteranodon is not a dinosaur.");
-let pigeon = new DinosCreate("Pigeon", 0.5, 9, "herbavor", "World Wide", "Holocene", "All birds are living dinosaurs.");
+let triceratops = new DinosCreate("Triceratops", 13000, 114, "herbavor", "North America", "Late Cretaceous", "First discovered in 1889 by Othniel Charles Marsh.", "#009687f5");
+let tyrannosaurusRex = new DinosCreate("Tyrannosaurus Rex", 11905, 144, "carnivor", "North America", "Late Cretaceous", "The largest known skull measures in at 5 feet long.", "#dc7657f5");
+let anklyosaurus = new DinosCreate("Anklyosaurus", 10500, 55, "herbavor", "North America", "Late Cretaceous", "Anklyosaurus survived for approximately 135 million years.", "#4bb3c1fa");
+let brachiosaurus = new DinosCreate("Brachiosaurus", 70000, 372, "herbavor", "North America", "Late Jurasic", "An asteroid was named 9954 Brachiosaurus in 1991.", "#fac069f9");
+let stegosaurus = new DinosCreate("Stegosaurus", 11600, 79, "herbavor", "North America, Europe, Asia", "Late Jurasic to Early Cretaceous", "The Stegosaurus had between 17 and 22 seperate places and flat spines.", "#b94169fa");
+let elasmosaurus = new DinosCreate("Elasmosaurus", 16000, 59, "carnivor", "North America", "Late Cretaceous", "Elasmosaurus was a marine reptile first discovered in Kansas.", "#7f62b3fa");
+let pteranodon = new DinosCreate("Pteranodon", 44, 20, "carnivor", "North America", "Late Cretaceous", "Actually a flying reptile, the Pteranodon is not a dinosaur.", "#9fc376f9");
+let pigeon = new DinosCreate("Pigeon", 0.5, 9, "herbavor", "World Wide", "Holocene", "All birds are living dinosaurs.", "#677bcbfa");
 
 //Validate the form
 function validateForm() {
@@ -41,7 +42,7 @@ button.addEventListener("click", function() {
   if (validateForm()) {
 
     // Create human object
-    let human = new DinosCreate("", "", "", "", "", "", "", "");
+    let human = new DinosCreate("", "", "", "", "", "", "", "#67a866f9");
 
     //Get human data from form
     (function getHumanData() {
@@ -106,6 +107,8 @@ button.addEventListener("click", function() {
       let image = document.createElement("img");
       let fact = document.createElement("p");
       tileDiv.className = "grid-item";
+      //Add each tile bg color
+      tileDiv.style.backgroundColor = dino.cardColor;
       let tileFragment = document.createDocumentFragment();
       tileFragment.appendChild(tileDiv);
       tileDiv.appendChild(title);
