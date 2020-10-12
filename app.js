@@ -34,6 +34,10 @@ function validateForm() {
   return valid;
 }
 
+//Set background color
+
+
+
 const button = document.getElementById("btn");
 button.addEventListener("click", function() {
 
@@ -46,9 +50,9 @@ button.addEventListener("click", function() {
     //Get human data from form
     (function getHumanData() {
       human.species = document.getElementById("name").value;
-      human.weight = document.getElementById('weight').value;
-      human.height = (parseFloat(document.getElementById('feet').value) * 12) + parseFloat(document.getElementById('inches').value);
-      human.diet = document.getElementById('diet').value;
+      human.weight = document.getElementById("weight").value;
+      human.height = (parseFloat(document.getElementById("feet").value) * 12) + parseFloat(document.getElementById("inches").value);
+      human.diet = document.getElementById("diet").value;
     })();
 
     //Dino compare method 1
@@ -78,21 +82,19 @@ button.addEventListener("click", function() {
 
     let dinos = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, human, stegosaurus, elasmosaurus, pteranodon, pigeon];
 
+
     //Create a new button
     let newButton = document.createElement("button");
     let newButtonText = document.createTextNode("New Compare");
     newButton.appendChild(newButtonText);
     newButton.setAttribute("class", "newBtn");
     newButton.type = "button";
+    //Add "New Compare" button back to DOM
     document.querySelector("#newButtonDiv").appendChild(newButton);
-    document.querySelector(".newBtn").addEventListener("click", function(){
-      //Go back to empty form input
-      human = new DinosCreate("", "", "", "", "", "", "", "");
-      console.log(human);
-      
-
+    //When "New Compare" button clicked, it acts like refresh the page
+    newButton.addEventListener("click", function(){
+      window.location.reload();
     });
-
 
     //Create each tile
     dinos.forEach(function(dino) {
