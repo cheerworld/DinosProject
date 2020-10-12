@@ -28,15 +28,11 @@ function validateForm() {
   let w = document.form.weight.value;
   let valid = true;
   if (x == "" || y == "" || z == "" || w == "") {
-    alert("Please fill out the form completely");
+    alert("Please fill out the form completely!");
     valid = false;
   }
   return valid;
 }
-
-//Set background color
-
-
 
 const button = document.getElementById("btn");
 button.addEventListener("click", function() {
@@ -82,22 +78,26 @@ button.addEventListener("click", function() {
 
     let dinos = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, human, stegosaurus, elasmosaurus, pteranodon, pigeon];
 
-
     //Create a new button
-    let newButton = document.createElement("button");
-    let newButtonText = document.createTextNode("New Compare");
-    newButton.appendChild(newButtonText);
-    newButton.setAttribute("class", "newBtn");
-    newButton.type = "button";
-    //Add "New Compare" button back to DOM
-    document.querySelector("#newButtonDiv").appendChild(newButton);
-    //When "New Compare" button clicked, it acts like refresh the page
+    if (!document.querySelector(".newBtn")) {
+      let newButton = document.createElement("button");
+      let newButtonText = document.createTextNode("New Compare");
+      newButton.appendChild(newButtonText);
+      newButton.setAttribute("class", "newBtn");
+      newButton.type = "button";
+      //Add "New Compare" button back to DOM
+      document.querySelector("#newButtonDiv").appendChild(newButton);
+      //When "New Compare" button clicked, it hides and clear the grid, and show form
+      newButton.addEventListener("click", function() {
+        document.querySelector("#grid").innerHTML = "";
+        document.querySelector("#grid").style.display = "none";
+        document.querySelector("#dino-compare").style.display = "block";
+        if (document.querySelector("#dino-compare").style.display = "block") {
+          document.querySelector(".newBtn").style.display = "none";
+        }
+      });
 
-    newButton.addEventListener("click", function(){
-      document.querySelector("#grid").style.display = "none";
-      document.querySelector("#dino-compare").style.display = "block";
-    });
-
+    }
 
     //Create each tile
     dinos.forEach(function(dino) {
@@ -167,7 +167,9 @@ button.addEventListener("click", function() {
     // Remove form from screen
     document.querySelector("#dino-compare").style.display = "none";
     // On button click, prepare and display infographic
-    document.querySelector("#grid").style.display = "block";
+    document.querySelector("#grid").style.display = "flex";
+    // On compare button click, display new compare button
+    document.querySelector(".newBtn").style.display = "inline-block";
   };
 
 });
