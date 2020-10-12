@@ -92,9 +92,12 @@ button.addEventListener("click", function() {
     //Add "New Compare" button back to DOM
     document.querySelector("#newButtonDiv").appendChild(newButton);
     //When "New Compare" button clicked, it acts like refresh the page
+
     newButton.addEventListener("click", function(){
-      window.location.reload();
+      document.querySelector("#grid").style.display = "none";
+      document.querySelector("#dino-compare").style.display = "block";
     });
+
 
     //Create each tile
     dinos.forEach(function(dino) {
@@ -163,8 +166,8 @@ button.addEventListener("click", function() {
     });
     // Remove form from screen
     document.querySelector("#dino-compare").style.display = "none";
+    // On button click, prepare and display infographic
+    document.querySelector("#grid").style.display = "block";
   };
 
 });
-
-// On button click, prepare and display infographic
