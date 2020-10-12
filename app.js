@@ -23,9 +23,12 @@ let pigeon = new DinosCreate("Pigeon", 0.5, 9, "herbavor", "World Wide", "Holoce
 function validateForm() {
 
   let x = document.form.name.value;
+  let y = document.form.feet.value;
+  let z = document.form.inches.value;
+  let w = document.form.weight.value;
   let valid = true;
-  if (x == "") {
-    alert("Name must be filled out");
+  if (x == "" || y == "" || z == "" || w == "") {
+    alert("Please fill out the form completely");
     valid = false;
   }
   return valid;
@@ -34,116 +37,132 @@ function validateForm() {
 const button = document.getElementById("btn");
 button.addEventListener("click", function() {
 
-//call validateForm function, if ture, execute the rest of the code
-if (validateForm()) {
+  //call validateForm function, if ture, execute the rest of the code
+  if (validateForm()) {
 
-  // Create human object
-  let human = new DinosCreate("", "", "", "", "", "", "", "");
+    // Create human object
+    let human = new DinosCreate("", "", "", "", "", "", "", "");
 
-  //Get human data from form
-  (function getHumanData() {
-    human.species = document.getElementById("name").value;
-    human.weight = document.getElementById('weight').value;
-    human.height = (parseFloat(document.getElementById('feet').value) * 12) + parseFloat(document.getElementById('inches').value);
-    human.diet = document.getElementById('diet').value;
-  })();
+    //Get human data from form
+    (function getHumanData() {
+      human.species = document.getElementById("name").value;
+      human.weight = document.getElementById('weight').value;
+      human.height = (parseFloat(document.getElementById('feet').value) * 12) + parseFloat(document.getElementById('inches').value);
+      human.diet = document.getElementById('diet').value;
+    })();
 
-  //Dino compare method 1
-  DinosCreate.prototype.compareWeight = function() {
-    if (this.weight > human.weight) {
-      return this.species + " is heavier than you.";
-    } else {
-      return this.species + " is lighter than you.";
-    }
-  };
-  //Dino compare method 2
-  DinosCreate.prototype.compareHeight = function() {
-    if (this.height > human.height) {
-      return this.species + " is taller than you.";
-    } else {
-      return this.species + " is short than you.";
-    }
-  };
-  //Dino compare method 3
-  DinosCreate.prototype.compareDiet = function() {
-    if (this.diet === human.diet) {
-      return this.species + " and you have the same diet!";
-    } else {
-      return this.species + " was " + this.diet + " while you are " + human.diet + ".";
-    }
-  };
-
-  let dinos = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, human, stegosaurus, elasmosaurus, pteranodon, pigeon];
-
-  //Create each tile
-  dinos.forEach(function(dino) {
-    let tileDiv = document.createElement("div");
-    let title = document.createElement("h3");
-    let image = document.createElement("img");
-    let fact = document.createElement("p");
-    tileDiv.className = "grid-item";
-    let tileFragment = document.createDocumentFragment();
-    tileFragment.appendChild(tileDiv);
-    tileDiv.appendChild(title);
-    tileDiv.appendChild(image);
-    tileDiv.appendChild(fact);
-
-    //Add tile to DOM
-    document.querySelector("#grid").appendChild(tileFragment);
-
-    //Generate title text
-    let titleText = document.createTextNode(dino.species);
-    title.appendChild(titleText);
-
-    //Generate images
-    if (dino === human) {
-      image.src = "images/human.png";
-    } else {
-      image.src = "images/" + dino.species.toLocaleLowerCase() + ".png";
-    }
-
-    //Generate fact
-    if (dino === human) {
-      const humanFact = document.createTextNode(dino.fact);
-      fact.appendChild(humanFact);
-    } else if (dino === pigeon) {
-      const pigeonFact = document.createTextNode(dino.fact);
-      fact.appendChild(pigeonFact);
-    } else {
-      let randomNum = Math.floor(Math.random() * 6);
-      let randomFact;
-      //Generate random facts for Dinos
-      switch (randomNum) {
-        case 0:
-          randomFact = dino.species + " used to live in " + dino.where + ".";
-          break;
-        case 1:
-          randomFact = dino.species + " was alive during " + dino.when + ".";
-          break;
-        case 2:
-          randomFact = dino.fact;
-          break;
-        case 3:
-          randomFact = dino.compareWeight();
-          break;
-        case 4:
-          randomFact = dino.compareHeight();
-          break;
-        case 5:
-          randomFact = dino.compareDiet();
-          break;
-        default:
-          randomFact = "No fact was found."
+    //Dino compare method 1
+    DinosCreate.prototype.compareWeight = function() {
+      if (this.weight > human.weight) {
+        return this.species + " is heavier than you.";
+      } else {
+        return this.species + " is lighter than you.";
       }
-      randomFact = document.createTextNode(randomFact);
-      fact.appendChild(randomFact);
-    }
+    };
+    //Dino compare method 2
+    DinosCreate.prototype.compareHeight = function() {
+      if (this.height > human.height) {
+        return this.species + " is taller than you.";
+      } else {
+        return this.species + " is short than you.";
+      }
+    };
+    //Dino compare method 3
+    DinosCreate.prototype.compareDiet = function() {
+      if (this.diet === human.diet) {
+        return this.species + " and you have the same diet!";
+      } else {
+        return this.species + " was " + this.diet + " while you are " + human.diet + ".";
+      }
+    };
 
-  });
-  // Remove form from screen
-  document.querySelector("#dino-compare").style.display = "none";
-};
+    let dinos = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, human, stegosaurus, elasmosaurus, pteranodon, pigeon];
+
+    //Create a new button
+    let newButton = document.createElement("button");
+    let newButtonText = document.createTextNode("New Compare");
+    newButton.appendChild(newButtonText);
+    newButton.setAttribute("class", "newBtn");
+    newButton.type = "button";
+    document.querySelector("#newButtonDiv").appendChild(newButton);
+    document.querySelector(".newBtn").addEventListener("click", function(){
+      //Go back to empty form input
+      human = new DinosCreate("", "", "", "", "", "", "", "");
+      console.log(human);
+      
+
+    });
+
+
+    //Create each tile
+    dinos.forEach(function(dino) {
+      let tileDiv = document.createElement("div");
+      let title = document.createElement("h3");
+      let image = document.createElement("img");
+      let fact = document.createElement("p");
+      tileDiv.className = "grid-item";
+      let tileFragment = document.createDocumentFragment();
+      tileFragment.appendChild(tileDiv);
+      tileDiv.appendChild(title);
+      tileDiv.appendChild(image);
+      tileDiv.appendChild(fact);
+
+      //Add tile to DOM
+      document.querySelector("#grid").appendChild(tileFragment);
+
+      //Generate title text
+      let titleText = document.createTextNode(dino.species);
+      title.appendChild(titleText);
+
+      //Generate images
+      if (dino === human) {
+        image.src = "images/human.png";
+      } else {
+        image.src = "images/" + dino.species.toLocaleLowerCase() + ".png";
+      }
+
+      //Generate fact
+      if (dino === human) {
+        const humanFact = document.createTextNode(dino.fact);
+        fact.appendChild(humanFact);
+      } else if (dino === pigeon) {
+        const pigeonFact = document.createTextNode(dino.fact);
+        fact.appendChild(pigeonFact);
+      } else {
+        let randomNum = Math.floor(Math.random() * 6);
+        let randomFact;
+        //Generate random facts for Dinos
+        switch (randomNum) {
+          case 0:
+            randomFact = dino.species + " used to live in " + dino.where + ".";
+            break;
+          case 1:
+            randomFact = dino.species + " was alive during " + dino.when + ".";
+            break;
+          case 2:
+            randomFact = dino.fact;
+            break;
+          case 3:
+            randomFact = dino.compareWeight();
+            break;
+          case 4:
+            randomFact = dino.compareHeight();
+            break;
+          case 5:
+            randomFact = dino.compareDiet();
+            break;
+          default:
+            randomFact = "No fact was found."
+        }
+        randomFact = document.createTextNode(randomFact);
+        fact.appendChild(randomFact);
+      }
+
+    });
+    // Remove form from screen
+    document.querySelector("#dino-compare").style.display = "none";
+  };
 
 });
 
-  // On button click, prepare and display infographic
+// On button click, prepare and display infographic
