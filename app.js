@@ -44,7 +44,7 @@ button.addEventListener("click", function() {
     // Create human object
     let human = new DinosCreate("", "", "", "", "", "", "", "#67a866f9");
 
-    //Get human data from form
+    //Get human data from form using IIFE
     (function getHumanData() {
       human.species = document.getElementById("name").value;
       human.weight = document.getElementById("weight").value;
@@ -77,7 +77,19 @@ button.addEventListener("click", function() {
       }
     };
 
-    let dinos = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, human, stegosaurus, elasmosaurus, pteranodon, pigeon];
+    let dinos = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, stegosaurus, elasmosaurus, pteranodon, pigeon];
+
+    ////Shuffle dinos array using IIFE
+    (function shuffleDinosArray() {
+      for (let a = dinos.length - 1; a > 0; a--) {
+        const b = Math.floor(Math.random() * a);
+        const temp = dinos[a];
+        dinos[a] = dinos[b];
+        dinos[b] = temp;
+      }
+      //Add human in the middle of dinos array
+      dinos.splice(4, 0, human);
+    })();
 
     //Create a new button
     if (!document.querySelector(".newBtn")) {
