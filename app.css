@@ -168,14 +168,15 @@ select {
 }
 
 p.statistics {
-  padding-bottom: 200px;
-  padding-top: 200px;
-
+  max-width: 100%;
+  max-height: 100%;
+  padding-top: 40%;
+  padding-bottom: 60%;
+  visibility: hidden;
 }
 
-
-p.statistics:hover {
-  display: flex;
+.grid-item:hover p.statistics {
+  visibility: visible;
 }
 
 /* Footer */

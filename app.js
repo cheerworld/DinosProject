@@ -147,13 +147,22 @@ button.addEventListener("click", function() {
         image.src = "images/" + dino.species.toLocaleLowerCase() + ".png";
       }
 
-      //Generate fact
+      //Generate fact & creat basic statistics
       if (dino === human) {
         const humanFact = document.createTextNode(dino.fact);
         fact.appendChild(humanFact);
+        statistics.innerHTML =
+          "You weigh around " + dino.weight + "lbs, <br> you are " + dino.height +
+          " inches tall, <br> you are a " + dino.diet + ". <br>";
+
       } else if (dino === pigeon) {
         const pigeonFact = document.createTextNode(dino.fact);
         fact.appendChild(pigeonFact);
+        statistics.innerHTML =
+          "It weighs around " + dino.weight + "lbs, <br> it is " + dino.height +
+          " inches tall, <br> it is a " + dino.diet + ", <br> it exists " +
+          dino.where + ", it's origins can be tracked back to the " + dino.when + " era.";
+
       } else {
         let randomNum = Math.floor(Math.random() * 6);
         let randomFact;
@@ -182,12 +191,11 @@ button.addEventListener("click", function() {
         }
         randomFact = document.createTextNode(randomFact);
         fact.appendChild(randomFact);
+        statistics.innerHTML =
+          "It weighed around " + dino.weight + "lbs, <br> it was " + dino.height +
+          " inches tall, <br> it was a " + dino.diet + ", <br> it lived in " +
+          dino.where + ", <br> it was alive during " + dino.when + ". <br>";
       }
-
-        //When hover each tile, show basic statistics
-        let dinoStatistics = document.createTextNode(dino.species + " weighted around " + dino.weight + "lbs.\n" + dino.species + " was " + dino.height + " inches tall.\n");
-
-        statistics.appendChild(dinoStatistics);
 
     });
     // Remove form from screen
