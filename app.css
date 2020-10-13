@@ -167,6 +167,17 @@ select {
     cursor: pointer;
 }
 
+p.statistics {
+  padding-bottom: 200px;
+  padding-top: 200px;
+
+}
+
+
+p.statistics:hover {
+  display: flex;
+}
+
 /* Footer */
 .fine-print {
     display: block;

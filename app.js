@@ -118,14 +118,20 @@ button.addEventListener("click", function() {
       let title = document.createElement("h3");
       let image = document.createElement("img");
       let fact = document.createElement("p");
+      let statistics = document.createElement("p");
       tileDiv.className = "grid-item";
+      statistics.className = "statistics";
+
       //Add each tile bg color
       tileDiv.style.backgroundColor = dino.cardColor;
+
       let tileFragment = document.createDocumentFragment();
       tileFragment.appendChild(tileDiv);
       tileDiv.appendChild(title);
       tileDiv.appendChild(image);
       tileDiv.appendChild(fact);
+      tileDiv.appendChild(statistics);
+
 
       //Add tile to DOM
       document.querySelector("#grid").appendChild(tileFragment);
@@ -177,6 +183,11 @@ button.addEventListener("click", function() {
         randomFact = document.createTextNode(randomFact);
         fact.appendChild(randomFact);
       }
+
+        //When hover each tile, show basic statistics
+        let dinoStatistics = document.createTextNode(dino.species + " weighted around " + dino.weight + "lbs.\n" + dino.species + " was " + dino.height + " inches tall.\n");
+
+        statistics.appendChild(dinoStatistics);
 
     });
     // Remove form from screen
