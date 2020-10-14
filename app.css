@@ -144,12 +144,22 @@ input {
     box-sizing: border-box;
 }
 
+.form-field__medium {
+  width:85%;
+  box-sizing: border-box;
+}
+
 .form-field__full {
     width: 100%;
     box-sizing: border-box;
 }
 
-select {
+.weightConvert, .feetOrMeter, .inchOrCm{
+  padding: 6px 2px;
+  font-size: 1.1em;
+}
+
+#diet {
     display: block;
 }
 
@@ -174,6 +184,19 @@ p.statistics {
   padding-bottom: 60%;
   visibility: hidden;
 }
+
+/* Change hover using Tooltip
+.statistics {
+  visibility: hidden;
+  background-color: grey;
+  width: 300px;
+  position: absolute;
+  z-index: 1;
+  bottom: 50%;
+  left: 30%;
+  margin-left: -60px;
+
+}*/
 
 .grid-item:hover p.statistics {
   visibility: visible;

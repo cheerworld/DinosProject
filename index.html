@@ -28,10 +28,28 @@
       <p>Name:</p>
       <input id="name" class="form-field__full" type="name" name="name" value="">
       <p>Height</p>
-      <label>Feet: <input id="feet" class="form-field__short" type="number" name="feet" value=""></label>
-      <label>inches: <input id="inches" class="form-field__short" type="number" name="inches" value=""></label>
+      <label>
+        <select class="feetOrMeter" name="feetOrMeter" value="">
+          <option>Feet</option>
+          <option>Meter</option>
+        </select>
+        <input id="ftOrM" class="form-field__short" type="number" name="ftOrM" value="">
+      </label>
+      <label>
+        <select class="inchOrCm" name="inchOrCm" value="">
+          <option>Inches</option>
+          <option>cm</option>
+        </select>
+        <input id="inchesOrCm" class="form-field__short" type="number" name="inchesOrCm" value="">
+      </label>
       <p>Weight:</p>
-      <label><input id="weight" class="form-field__full" type="number" name="weight" value="">lbs</label>
+      <label>
+        <input id="weight" class="form-field__medium" type="number" name="weight" value="">
+        <select class="weightConvert" name="weightConvert" value="">
+          <option>lbs</option>
+          <option>kg</option>
+        </select>
+      </label>
       <p>Diet:</p>
       <select id="diet" class="form-field__full" name="diet" value="">
         <option>Herbavor</option>

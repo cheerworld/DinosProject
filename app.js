@@ -24,8 +24,8 @@ let pigeon = new DinosCreate("Pigeon", 0.5, 9, "herbavor", "World Wide", "Holoce
 function validateForm() {
 
   let x = document.form.name.value;
-  let y = document.form.feet.value;
-  let z = document.form.inches.value;
+  let y = document.form.ftOrM.value;
+  let z = document.form.inchesOrCm.value;
   let w = document.form.weight.value;
   let valid = true;
   if (x == "" || y == "" || z == "" || w == "") {
@@ -34,6 +34,11 @@ function validateForm() {
   }
   return valid;
 }
+
+/*if (document.form.feetOrMeter.value==="Feet"){
+  document.querySelector(".inchOrCm").options[1].disabled = true;
+}*/
+
 
 const button = document.getElementById("btn");
 button.addEventListener("click", function() {
@@ -47,10 +52,25 @@ button.addEventListener("click", function() {
     //Get human data from form using IIFE
     (function getHumanData() {
       human.species = document.getElementById("name").value;
-      human.weight = document.getElementById("weight").value;
-      human.height = (parseFloat(document.getElementById("feet").value) * 12) + parseFloat(document.getElementById("inches").value);
+      if (document.form.weightConvert.value === "kg") {
+        const kgPerPound = 2.205;
+        human.weight = document.getElementById("weight").value * kgPerPound;
+      } else {
+        human.weight = document.getElementById("weight").value;
+      }
+      if (document.form.feetOrMeter.value==="Feet" && document.form.inchOrCm.value==="Inches") {
+         human.height = (parseFloat(document.getElementById("ftOrM").value) * 12) + parseFloat(document.getElementById("inchesOrCm").value);
+      } else if (document.form.feetOrMeter.value==="Feet" && document.form.inchOrCm.value==="cm") {
+         human.height = (parseFloat(document.getElementById("ftOrM").value) * 12) + parseFloat(document.getElementById("inchesOrCm").value/2.54);
+      } else if (document.form.feetOrMeter.value==="Meter" && document.form.inchOrCm.value==="Inches") {
+        human.height = (parseFloat(document.getElementById("ftOrM").value) * 39.37) + parseFloat(document.getElementById("inchesOrCm").value);
+      } else {
+        human.height = (parseFloat(document.getElementById("ftOrM").value) * 39.37) + parseFloat(document.getElementById("inchesOrCm").value/2.54);
+      }
+
       human.diet = document.getElementById("diet").value;
     })();
+    console.log(human);
 
     //Dino compare method 1
     DinosCreate.prototype.compareWeight = function() {
