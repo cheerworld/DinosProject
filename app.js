@@ -35,10 +35,19 @@ function validateForm() {
   return valid;
 }
 
-/*if (document.form.feetOrMeter.value==="Feet"){
-  document.querySelector(".inchOrCm").options[1].disabled = true;
-}*/
-
+//set inches/cm disable depends on feet/m
+const form = document.querySelector("#dino-compare");
+const ftOrMChange = form.elements["feetOrMeter"];
+const inchOrCmChange = form.elements["inchOrCm"];
+ftOrMChange.addEventListener("change", function(e){
+  if (e.target.value === "meter") {
+    inchOrCmChange.value = "cm";
+    inchOrCmChange.options[0].disabled = true;
+  } else {
+    inchOrCmChange.value = "inches";
+    inchOrCmChange.options[1].disabled = true;
+  }
+});
 
 const button = document.getElementById("btn");
 button.addEventListener("click", function() {
@@ -54,18 +63,23 @@ button.addEventListener("click", function() {
       human.species = document.getElementById("name").value;
       if (document.form.weightConvert.value === "kg") {
         const kgPerPound = 2.205;
-        human.weight = document.getElementById("weight").value * kgPerPound;
+        const weightInput = document.getElementById("weight").value;
+        human.weight = parseFloat(weightInput * kgPerPound);
       } else {
-        human.weight = document.getElementById("weight").value;
+        human.weight = parseFloat(weightInput);
       }
-      if (document.form.feetOrMeter.value==="Feet" && document.form.inchOrCm.value==="Inches") {
-         human.height = (parseFloat(document.getElementById("ftOrM").value) * 12) + parseFloat(document.getElementById("inchesOrCm").value);
-      } else if (document.form.feetOrMeter.value==="Feet" && document.form.inchOrCm.value==="cm") {
-         human.height = (parseFloat(document.getElementById("ftOrM").value) * 12) + parseFloat(document.getElementById("inchesOrCm").value/2.54);
-      } else if (document.form.feetOrMeter.value==="Meter" && document.form.inchOrCm.value==="Inches") {
-        human.height = (parseFloat(document.getElementById("ftOrM").value) * 39.37) + parseFloat(document.getElementById("inchesOrCm").value);
+      const ftOrMValue = document.form.feetOrMeter.value;
+      const inchOrCmValue = document.form.inchOrCm.value;
+      const ftOrMInput = document.getElementById("ftOrM").value;
+      const inchOrCmInput = document.getElementById("inchesOrCm").value;
+      if (ftOrMValue==="feet" && inchOrCmValue ==="inches") {
+         human.height = (parseFloat(ftOrMInput) * 12) + parseFloat(inchOrCmInput);
+      } else if (ftOrMValue ==="feet" && inchOrCmValue ==="cm") {
+         human.height = (parseFloat(ftOrMInput) * 12) + parseFloat(inchOrCmInput)/2.54;
+      } else if (ftOrMValue ==="meter" && inchOrCmValue ==="inches") {
+        human.height = (parseFloat(ftOrMInput) * 39.37) + parseFloat(inchOrCmInput);
       } else {
-        human.height = (parseFloat(document.getElementById("ftOrM").value) * 39.37) + parseFloat(document.getElementById("inchesOrCm").value/2.54);
+        human.height = (parseFloat(ftOrMInput) * 39.37) + parseFloat(inchOrCmInput)/2.54;
       }
 
       human.diet = document.getElementById("diet").value;
