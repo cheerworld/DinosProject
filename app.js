@@ -35,16 +35,18 @@ function validateForm() {
   return valid;
 }
 
-//set inches/cm disable depends on feet/m using IIFE
-/*(function() {
-
-  if (document.form.feetOrMeter.value === "feet") {
-    document.querySelector(".inchOrCm").options[1].disabled = true;
-  }
-
+//Set inches/cm disable depends on feet/m using IIFE
+(function() {
   const form = document.querySelector("#dino-compare");
   const ftOrMChange = form.elements["feetOrMeter"];
   const inchOrCmChange = form.elements["inchOrCm"];
+
+  document.addEventListener("DOMContentLoaded", function() {
+    ftOrMChange.value === "feet";
+    inchOrCmChange.value = "inches";
+    inchOrCmChange.options[0].disabled = true;
+    inchOrCmChange.options[1].disabled = true;
+  });
 
   ftOrMChange.addEventListener("change", function(e) {
 
@@ -60,43 +62,15 @@ function validateForm() {
     }
   });
 })();
-*/
-//Another way to set inches/cm disable depends on feet/m using IIFE
-(function (){
-const form = document.querySelector("#dino-compare");
-const ftOrMChange = form.elements["feetOrMeter"];
-const inchOrCmChange = form.elements["inchOrCm"];
-
-document.addEventListener("DOMContentLoaded", function(){
-  ftOrMChange.value === "feet";
-  inchOrCmChange.value = "inches";
-    inchOrCmChange.options[0].disabled = true;
-    inchOrCmChange.options[1].disabled = true;
-});
-
-ftOrMChange.addEventListener("change", function(e) {
-
-  if (e.target.value === "meter") {
-    inchOrCmChange.value = "cm";
-    inchOrCmChange.options[0].disabled = true;
-    inchOrCmChange.options[1].disabled = false;
-
-  } else {
-    inchOrCmChange.value = "inches";
-    inchOrCmChange.options[1].disabled = true;
-    inchOrCmChange.options[0].disabled = false;
-  }
-});
-})();
 
 const button = document.getElementById("btn");
+//Button event click function
 button.addEventListener("click", function() {
-
   //call validateForm function, if ture, execute the rest of the code
   if (validateForm()) {
 
     // Create human object
-    let human = (function(){
+    let human = (function() {
       //Get human data from form using the revealing module pattern
       let species = document.getElementById("name").value;
 
@@ -177,25 +151,27 @@ button.addEventListener("click", function() {
       dinos.splice(4, 0, human);
     })();
 
-    //Create a new button
-    if (!document.querySelector(".newBtn")) {
-      let newButton = document.createElement("button");
-      let newButtonText = document.createTextNode("New Compare");
-      newButton.appendChild(newButtonText);
-      newButton.setAttribute("class", "newBtn");
-      newButton.type = "button";
-      //Add "New Compare" button back to DOM
-      document.querySelector("#newButtonDiv").appendChild(newButton);
-      //When "New Compare" button clicked, it hides and clear the grid, and show form
-      newButton.addEventListener("click", function() {
-        document.querySelector("#grid").innerHTML = "";
-        document.querySelector("#grid").style.display = "none";
-        document.querySelector("#dino-compare").style.display = "block";
-        if (document.querySelector("#dino-compare").style.display = "block") {
-          document.querySelector(".newBtn").style.display = "none";
-        }
-      });
-    }
+    //Create a new button using IIFE
+    (function() {
+      if (!document.querySelector(".newBtn")) {
+        let newButton = document.createElement("button");
+        let newButtonText = document.createTextNode("New Compare");
+        newButton.appendChild(newButtonText);
+        newButton.setAttribute("class", "newBtn");
+        newButton.type = "button";
+        //Add "New Compare" button back to DOM
+        document.querySelector("#newButtonDiv").appendChild(newButton);
+        //When "New Compare" button clicked, it hides and clear the grid, and show form
+        newButton.addEventListener("click", function() {
+          document.querySelector("#grid").innerHTML = "";
+          document.querySelector("#grid").style.display = "none";
+          document.querySelector("#dino-compare").style.display = "block";
+          if (document.querySelector("#dino-compare").style.display = "block") {
+            document.querySelector(".newBtn").style.display = "none";
+          }
+        });
+      }
+    })();
 
     //Create each tile
     dinos.forEach(function(dino) {
@@ -284,10 +260,10 @@ button.addEventListener("click", function() {
       }
 
       //on hover show or hidd the statistics
-      tileDiv.addEventListener("mouseover", function (){
+      tileDiv.addEventListener("mouseover", function() {
         statistics.style.visibility = "visible";
       });
-      tileDiv.addEventListener("mouseout", function(){
+      tileDiv.addEventListener("mouseout", function() {
         statistics.style.visibility = "hidden";
       });
 
