@@ -24,8 +24,8 @@ let pigeon = new DinosCreate("Pigeon", 0.5, 9, "herbavor", "World Wide", "Holoce
 function validateForm() {
 
   let x = document.form.name.value;
-  let y = document.form.ftOrM.value;
-  let z = document.form.inchesOrCm.value;
+  let y = document.form.ftOrMInput.value;
+  let z = document.form.inchesOrCmInput.value;
   let w = document.form.weight.value;
   let valid = true;
   if (x == "" || y == "" || z == "" || w == "") {
@@ -35,19 +35,59 @@ function validateForm() {
   return valid;
 }
 
-//set inches/cm disable depends on feet/m
+//set inches/cm disable depends on feet/m using IIFE
+/*(function() {
+
+  if (document.form.feetOrMeter.value === "feet") {
+    document.querySelector(".inchOrCm").options[1].disabled = true;
+  }
+
+  const form = document.querySelector("#dino-compare");
+  const ftOrMChange = form.elements["feetOrMeter"];
+  const inchOrCmChange = form.elements["inchOrCm"];
+
+  ftOrMChange.addEventListener("change", function(e) {
+
+    if (e.target.value === "meter") {
+      inchOrCmChange.value = "cm";
+      inchOrCmChange.options[0].disabled = true;
+      inchOrCmChange.options[1].disabled = false;
+
+    } else {
+      inchOrCmChange.value = "inches";
+      inchOrCmChange.options[1].disabled = true;
+      inchOrCmChange.options[0].disabled = false;
+    }
+  });
+})();
+*/
+//Another way to set inches/cm disable depends on feet/m using IIFE
+(function (){
 const form = document.querySelector("#dino-compare");
 const ftOrMChange = form.elements["feetOrMeter"];
 const inchOrCmChange = form.elements["inchOrCm"];
-ftOrMChange.addEventListener("change", function(e){
+
+document.addEventListener("DOMContentLoaded", function(){
+  ftOrMChange.value === "feet";
+  inchOrCmChange.value = "inches";
+    inchOrCmChange.options[0].disabled = true;
+    inchOrCmChange.options[1].disabled = true;
+});
+
+ftOrMChange.addEventListener("change", function(e) {
+
   if (e.target.value === "meter") {
     inchOrCmChange.value = "cm";
     inchOrCmChange.options[0].disabled = true;
+    inchOrCmChange.options[1].disabled = false;
+
   } else {
     inchOrCmChange.value = "inches";
     inchOrCmChange.options[1].disabled = true;
+    inchOrCmChange.options[0].disabled = false;
   }
 });
+})();
 
 const button = document.getElementById("btn");
 button.addEventListener("click", function() {
@@ -56,40 +96,50 @@ button.addEventListener("click", function() {
   if (validateForm()) {
 
     // Create human object
-    let human = new DinosCreate("", "", "", "", "", "", "", "#67a866f9");
+    let human = (function(){
+      //Get human data from form using the revealing module pattern
+      let species = document.getElementById("name").value;
 
-    //Get human data from form using IIFE
-    (function getHumanData() {
-      human.species = document.getElementById("name").value;
+      const kgPerPound = 2.205;
+      const weightInput = document.getElementById("weight").value;
+      let weight;
       if (document.form.weightConvert.value === "kg") {
-        const kgPerPound = 2.205;
-        const weightInput = document.getElementById("weight").value;
-        human.weight = parseFloat(weightInput * kgPerPound);
+        weight = parseFloat(weightInput * kgPerPound);
       } else {
-        human.weight = parseFloat(weightInput);
+        weight = parseFloat(weightInput);
       }
+
       const ftOrMValue = document.form.feetOrMeter.value;
       const inchOrCmValue = document.form.inchOrCm.value;
-      const ftOrMInput = document.getElementById("ftOrM").value;
-      const inchOrCmInput = document.getElementById("inchesOrCm").value;
-      if (ftOrMValue==="feet" && inchOrCmValue ==="inches") {
-         human.height = (parseFloat(ftOrMInput) * 12) + parseFloat(inchOrCmInput);
-      } else if (ftOrMValue ==="feet" && inchOrCmValue ==="cm") {
-         human.height = (parseFloat(ftOrMInput) * 12) + parseFloat(inchOrCmInput)/2.54;
-      } else if (ftOrMValue ==="meter" && inchOrCmValue ==="inches") {
-        human.height = (parseFloat(ftOrMInput) * 39.37) + parseFloat(inchOrCmInput);
+      const ftOrMInput = document.getElementById("ftOrMInput").value;
+      const inchOrCmInput = document.getElementById("inchesOrCmInput").value;
+      let height;
+
+      if (ftOrMValue === "feet" && inchOrCmValue === "inches") {
+        height = (parseFloat(ftOrMInput) * 12) + parseFloat(inchOrCmInput);
       } else {
-        human.height = (parseFloat(ftOrMInput) * 39.37) + parseFloat(inchOrCmInput)/2.54;
+        height = (parseFloat(ftOrMInput) * 39.37) + parseFloat(inchOrCmInput) / 2.54;
       }
 
-      human.diet = document.getElementById("diet").value;
+      let diet = document.getElementById("diet").value;
+      let cardColor = "#67a866f9";
+      let fact = "";
+      return {
+        species: species,
+        weight: weight,
+        height: Math.round(height),
+        diet: diet,
+        cardColor: cardColor,
+        fact: fact
+      }
     })();
-    console.log(human);
 
     //Dino compare method 1
     DinosCreate.prototype.compareWeight = function() {
       if (this.weight > human.weight) {
         return this.species + " is heavier than you.";
+      } else if (this.weight === human.weight) {
+        return this.species + " and you have the same weight!";
       } else {
         return this.species + " is lighter than you.";
       }
@@ -98,6 +148,8 @@ button.addEventListener("click", function() {
     DinosCreate.prototype.compareHeight = function() {
       if (this.height > human.height) {
         return this.species + " is taller than you.";
+      } else if (this.height === human.height) {
+        return this.species + " and you have the same height!"
       } else {
         return this.species + " is short than you.";
       }
@@ -113,7 +165,7 @@ button.addEventListener("click", function() {
 
     let dinos = [triceratops, tyrannosaurusRex, anklyosaurus, brachiosaurus, stegosaurus, elasmosaurus, pteranodon, pigeon];
 
-    ////Shuffle dinos array using IIFE
+    //Shuffle dinos array using IIFE
     (function shuffleDinosArray() {
       for (let a = dinos.length - 1; a > 0; a--) {
         const b = Math.floor(Math.random() * a);
@@ -143,7 +195,6 @@ button.addEventListener("click", function() {
           document.querySelector(".newBtn").style.display = "none";
         }
       });
-
     }
 
     //Create each tile
@@ -155,6 +206,8 @@ button.addEventListener("click", function() {
       let statistics = document.createElement("p");
       tileDiv.className = "grid-item";
       statistics.className = "statistics";
+      //change statistics visibility to hidden, so it won't show before hover
+      statistics.style.visibility = "hidden";
 
       //Add each tile bg color
       tileDiv.style.backgroundColor = dino.cardColor;
@@ -165,7 +218,6 @@ button.addEventListener("click", function() {
       tileDiv.appendChild(image);
       tileDiv.appendChild(fact);
       tileDiv.appendChild(statistics);
-
 
       //Add tile to DOM
       document.querySelector("#grid").appendChild(tileFragment);
@@ -230,6 +282,14 @@ button.addEventListener("click", function() {
           " inches tall, <br> it was a " + dino.diet + ", <br> it lived in " +
           dino.where + ", <br> it was alive during " + dino.when + ". <br>";
       }
+
+      //on hover show or hidd the statistics
+      tileDiv.addEventListener("mouseover", function (){
+        statistics.style.visibility = "visible";
+      });
+      tileDiv.addEventListener("mouseout", function(){
+        statistics.style.visibility = "hidden";
+      });
 
     });
     // Remove form from screen

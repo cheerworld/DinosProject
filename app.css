@@ -182,7 +182,6 @@ p.statistics {
   max-height: 100%;
   padding-top: 40%;
   padding-bottom: 60%;
-  visibility: hidden;
 }
 
 /* Change hover using Tooltip
@@ -197,10 +196,6 @@ p.statistics {
   margin-left: -60px;
 
 }*/
-
-.grid-item:hover p.statistics {
-  visibility: visible;
-}
 
 /* Footer */
 .fine-print {
