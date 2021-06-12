@@ -13,7 +13,7 @@ For the project, I generate a 3x3 grid of tiles (9 in total) with the human in t
 
 Please follow these steps to get started:
 
-1. We'll start with the typical setup - clone this repo and install the dependencies
+1. We'll start with the setup - clone this repo and install the dependencies
 
 ```git clone https://github.com/cheerworld/DinosProject.git```
 
@@ -44,6 +44,8 @@ In this project, my backend code:
 - [ ] Append tiles with object data to DOM
 
 ### Above and Beyond
+
+I add more features to this project to make it stand out. 
 
 1. I validate the form data to ensure the data is acceptable and complete.
 2. Allow the user to generate a new infographic.
